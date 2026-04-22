@@ -40,16 +40,17 @@ include 'koneksi.php';
             background-color: #fdfdfd;
             transition: 0.3s;
         }
+        /* UKURAN FOTO DI TABEL DIPERBESAR */
         .img-preview {
-            width: 50px;
-            height: 50px;
+            width: 100px;
+            height: 70px;
             object-fit: cover;
             border-radius: 8px;
-            cursor: zoom-in;
+            cursor: pointer;
             transition: transform 0.2s;
         }
         .img-preview:hover {
-            transform: scale(2.5);
+            transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         .badge-status {
@@ -147,7 +148,31 @@ include 'koneksi.php';
                                 <?php } ?>
                             </td>
                             <td>
-                                <img src="uploads/<?= $row['foto']; ?>" class="img-preview shadow-sm" alt="Bukti">
+                                <img src="uploads/<?= $row['foto']; ?>" 
+                                     class="img-preview shadow-sm" 
+                                     alt="Bukti"
+                                     data-bs-toggle="modal" 
+                                     data-bs-target="#imageModal<?= $row['id']; ?>">
+
+                                <div class="modal fade" id="imageModal<?= $row['id']; ?>" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                                        <div class="modal-content shadow">
+                                            <div class="modal-header border-0">
+                                                <h6 class="modal-title fw-bold">Bukti Foto: <?= $row['nama']; ?></h6>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body text-center p-0">
+                                                <img src="uploads/<?= $row['foto']; ?>" class="img-fluid rounded-bottom" style="max-height: 80vh; width: 100%; object-fit: contain;">
+                                            </div>
+                                            <div class="modal-footer border-0 p-2">
+                                                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                <a href="uploads/<?= $row['foto']; ?>" download class="btn btn-sm btn-primary">
+                                                    <i class="fas fa-download me-1"></i> Unduh Gambar
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                             <td class="text-center px-4">
                                 <a href="edit.php?id=<?= $row['id']; ?>" class="btn btn-action btn-outline-warning me-1">
